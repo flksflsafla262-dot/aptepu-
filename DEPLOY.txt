@@ -1,0 +1,9 @@
+SACRED / binware.ru
+
+1. Upload the contents of this folder to the root of binware.ru.
+2. The existing gate, canvases, animations, player and view counter are preserved and adapted for sacred.
+3. Background: media/background.mp4 (with images/background-poster.jpg fallback).
+4. Avatar: images/avatar.jpg.
+5. Music: media/loving-machine.mp3.
+6. Links: TikTok @sacredoi, Discord DUdwnEh4gr, FunPay 19504965, YouTube @sacred2.
+7. The shared profile counter requires PHP 7.4+ and write permission for /data. Start value remains 2709.

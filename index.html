@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>sacred</title>
+<meta name="description" content="sacred — links and profile">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://binware.ru/">
+<meta property="og:title" content="sacred">
+<meta property="og:description" content="sacred — links and profile">
+<meta property="og:image" content="images/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#050505">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://binware.ru/">
+<link rel="icon" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preload" href="fonts/jetbrainsmono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="images/avatar.jpg" as="image">
+<link rel="stylesheet" href="assets/style.3a51ceb486.css">
+</head><body>
+<video class="bg-video" autoplay muted loop playsinline preload="auto" poster="images/background-poster.jpg" aria-hidden="true">
+  <source src="media/background.mp4" type="video/mp4">
+</video>
+<div class="bg"></div>
+<canvas id="trail"></canvas>
+<canvas id="viz"></canvas>
+<div class="vignette"></div>
+
+<nav class="stage" aria-label="sacred links">
+  <div class="links">
+    <div class="profile-card">
+      <div class="avatar-orbit" id="avatarOrbit" aria-hidden="true">
+        <span class="orbit-ring orbit-ring-a"></span>
+        <span class="orbit-ring orbit-ring-b"></span>
+        <span class="orbit-ring orbit-ring-c"></span>
+        <span class="orbit-planet orbit-planet-a"></span>
+        <span class="orbit-planet orbit-planet-b"></span>
+        <span class="orbit-planet orbit-planet-c"></span>
+        <div class="avatar-shell"><img class="avatar" src="images/avatar.jpg" alt="sacred avatar" draggable="false"></div>
+      </div>
+      <div class="identity" aria-label="nickname">sacred</div>
+    </div>
+
+    <div class="row" style="--d: 0ms">
+      <a href="https://www.tiktok.com/@sacredoi" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <span class="t" data-text="tiktok">tiktok</span>
+      </a>
+    </div>
+    <div class="row" style="--d: 90ms">
+      <a href="https://discord.com/invite/DUdwnEh4gr" target="_blank" rel="noopener noreferrer" aria-label="Discord server">
+        <span class="t" data-text="discord">discord</span>
+      </a>
+    </div>
+    <div class="row" style="--d: 180ms">
+      <a href="https://funpay.com/users/19504965/" target="_blank" rel="noopener noreferrer" aria-label="FunPay">
+        <span class="t" data-text="funpay">funpay</span>
+      </a>
+    </div>
+    <div class="row" style="--d: 270ms">
+      <a href="https://www.youtube.com/@sacred2" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <span class="t" data-text="youtube">youtube</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<audio id="audio" preload="auto" playsinline></audio>
+
+<div class="island-player" id="islandPlayer" aria-label="music player">
+  <div class="playlist-panel" id="playlistPanel" aria-hidden="true">
+    <div class="playlist-head"><span>queue</span><span id="queueMode">4 tracks</span></div>
+    <div class="playlist-items" id="playlistItems"></div>
+  </div>
+
+  <div class="island-shell" id="islandShell">
+    <div class="island-top">
+      <button class="cover-wrap" id="coverBtn" type="button" aria-label="toggle playback">
+        <img class="track-cover" id="trackCover" src="images/covers/loving-machine.jpg" alt="track cover" draggable="false">
+        <span class="cover-edge"></span>
+      </button>
+      <div class="track-meta">
+        <div class="track-title" id="trackTitle">Loving Machine</div>
+        <div class="track-artist" id="trackArtist">TV Girl • instrumental + slowed</div>
+      </div>
+      <button class="queue-toggle" id="playlistToggle" type="button" aria-expanded="false" aria-controls="playlistPanel" aria-label="open playlist">
+        <span class="eq-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </button>
+    </div>
+
+    <div class="progress-row">
+      <span class="time time-left" id="timeElapsed">0:00</span>
+      <div class="seek island-seek" id="seek" role="slider" tabindex="0" aria-label="seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="rail"></div><div class="fill" id="seekFill"></div><div class="knob" id="seekKnob"></div>
+      </div>
+      <span class="time time-right" id="timeRemaining">-0:00</span>
+    </div>
+
+    <div class="control-row">
+      <button class="icon-btn" id="shuffleBtn" type="button" aria-label="shuffle" title="Shuffle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5"/><path d="m21 3-6.2 6.2a4 4 0 0 1-5.6 0L3 3"/><path d="M16 16h5v5"/><path d="m21 21-6.2-6.2a4 4 0 0 0-5.6 0L3 21"/></svg>
+      </button>
+      <button class="icon-btn skip-btn" id="prevBtn" type="button" aria-label="previous track" title="Previous">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M6 5h2.3v14H6zM19 5.8v12.4c0 .7-.8 1.1-1.4.7L9 12.7a.85.85 0 0 1 0-1.4l8.6-6.2c.6-.4 1.4 0 1.4.7Z"/></svg>
+      </button>
+      <button class="icon-btn play-main" id="playBtn" type="button" aria-label="playback" title="Play / Pause"></button>
+      <button class="icon-btn skip-btn" id="nextBtn" type="button" aria-label="next track" title="Next">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M15.7 5H18v14h-2.3zM5 5.8v12.4c0 .7.8 1.1 1.4.7l8.6-6.2a.85.85 0 0 0 0-1.4L6.4 5.1c-.6-.4-1.4 0-1.4.7Z"/></svg>
+      </button>
+      <button class="icon-btn repeat-btn" id="repeatBtn" type="button" aria-label="repeat mode" title="Repeat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l3 3-3 3"/><path d="M3 11V9a4 4 0 0 1 4-4h13"/><path d="M7 22l-3-3 3-3"/><path d="M21 13v2a4 4 0 0 1-4 4H4"/></svg><span class="repeat-one" id="repeatOne">1</span>
+      </button>
+      <div class="volume-control" id="volumeControl">
+        <button class="icon-btn volume-btn" id="muteBtn" type="button" aria-label="volume" title="Volume"></button>
+        <div class="volume-popover" id="volumePopover" aria-hidden="true">
+          <div class="volume-percent" id="volumePercent">35</div>
+          <div class="volume-slider-v" id="volumeSlider" role="slider" tabindex="0" aria-label="volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35">
+            <div class="volume-rail-v"></div>
+            <div class="volume-fill-v" id="volumeFillV"></div>
+            <div class="volume-knob-v" id="volumeKnobV"></div>
+          </div>
+          <button class="volume-mute-mini" id="volumeMuteBtn" type="button" aria-label="mute"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="corner" aria-label="site credit">made by <b>#high</b></div>
+<div class="flash" id="flash"></div>
+<div class="grain"></div>
+<div class="gate" id="gate" aria-label="enter site">
+  <div class="bands" id="bands"></div>
+  <div class="gate-line" id="gateLine"><span id="gateText"></span><span class="gate-ok" id="gateOk"></span><i class="caret"></i></div>
+</div>
+<script defer src="assets/app.dc0387bc96.js"></script>
+</body></html>
